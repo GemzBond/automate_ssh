@@ -17,7 +17,7 @@ with open("ip_list.txt") as file:
     for ip in dump:
         print(ip)
         res = os.popen(f"ping {ip} {param} 3").read()
-        file_output = open(f'{homedir}{output}', 'a')
-        file_output.write(res)
-        file_output.close()
+        file = open(f'{homedir}{output}', 'a')
+        file.write(res)
+        file.close()
 
