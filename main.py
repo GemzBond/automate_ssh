@@ -5,14 +5,15 @@ with open("ip_list.txt") as file:
     dump = file.read()
     dump = dump.splitlines()
     current_os = platform.system().lower()
-    homedir = os.environ['HOME']
 
     if current_os == "windows":
         param = "-n"
         output = "\Desktop\output.txt"
+        homedir = os.environ['USERPROFILE']
     else:
         param = "-c"
         output = "/Desktop/output.txt"
+        homedir = os.environ['HOME']
     
     for ip in dump:
         print(ip)
