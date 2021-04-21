@@ -1,7 +1,10 @@
+import platform 
 import os
-import platform
+from paramiko import SSHClient, AutoAddPolicy, client
+from rich import print, pretty, inspect
+pretty.install()
 
-with open("ip_list.txt") as file:
+with open("ip_list_copy.txt") as file:
     dump = file.read()
     dump = dump.splitlines()
     current_os = platform.system().lower()
@@ -15,10 +18,20 @@ with open("ip_list.txt") as file:
         output = "/Desktop/output.txt"
         homedir = os.environ['HOME']
     
+    client = SSHClient()
+    client.set_missing_host_key_policy(AutoAddPolicy())
+
     for ip in dump:
         print(ip)
-        res = os.popen(f"ping {ip} {param} 3").read()
-        file = open(f'{homedir}{output}', 'a')
+        client.connect(ip, username='your_user', password='your_pass')
+        stdin, stdout, stderr = client.exec_command(f'ping {param} 3 x.x.x.x')
+        res = f'STDOUT: |{ip}| {stdout.read().decode("utf8")}'
+        file = open(f'{homedir}/Desktop/output.txt', 'a')
         file.write(res)
         file.close()
+
+
+
+
+
 
